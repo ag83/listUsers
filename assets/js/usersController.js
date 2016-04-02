@@ -2,8 +2,8 @@ module.exports = function ($scope, usersService) {
 
     var vm = this;
     vm.users = usersService.getUsers();
-    vm.currentUser;
-    vm.newUser;
+    vm.currentUser = null;
+    vm.newUser = false;
 
     $scope.$on('usersUpdated', function() {
          vm.users = usersService.getUsers();
@@ -47,6 +47,6 @@ module.exports = function ($scope, usersService) {
     vm.deleteUser = function(user) {
         usersService.deleteUser(vm.currentUser);
         vm.currentUser = null;
-    }
+    };
     
 };

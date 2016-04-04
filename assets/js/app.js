@@ -1,8 +1,4 @@
-require('bootstrap/dist/css/bootstrap.min.css');
-
-require('bootstrap/dist/js/bootstrap.min.js');
-require('angular');
-
+require('css/style.styl');
 
 var app = angular.module('userslist', []);
 

@@ -4,7 +4,10 @@ html(lang="en", ng-app="userslist")
         meta(name='viewport', content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width')
         meta(charset="utf-8")
         title Title
-        script(src='app.js') 
+        script(src='libs.js')
+        script(src='app.js')
+        link(href="styles.css", rel="stylesheet")
+
     body(ng-controller='UsersCtrl as UC')
         div.container.content
             header.row.hidden-xs
@@ -24,7 +27,7 @@ html(lang="en", ng-app="userslist")
                     li 
                         a(href='/index.html') Header
                     li
-                        a(data-toggle='modal', data-target='#createUser', ng-click='UC.userCond(true)') Add New user
+                        a(data-toggle='modal', data-target='#createUser', ng-click='UC.userCond(true)') Add New
                     li.dropdown
                         a.dropdown-toggle(data-toggle="dropdown" href="#") Menu
                             span.caret

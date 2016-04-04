@@ -8,125 +8,38 @@ html(lang="en", ng-app="userslist")
         script(src='app.js')
         link(href="styles.css", rel="stylesheet")
 
-    body(ng-controller='UsersCtrl as UC')
-        div.container.content
-            header.row.hidden-xs
-                div.col-sm-12.col-md-12.col-lg-12.text-center
-                    h1 Header
-                ul.nav.nav-pills.nav-justified
-                    li 
-                        a(href="#") Nav item1
-                    li 
-                        a(href="#") Nav item2
-                    li 
-                        a(href="#") Nav item3
-                    li 
-                        a(href="#") Nav item4
-            header.row.visible-xs
-                ul.nav.nav-pills
-                    li 
-                        a(href='/index.html') Header
-                    li
-                        a(data-toggle='modal', data-target='#createUser', ng-click='UC.userCond(true)') Add New
-                    li.dropdown
-                        a.dropdown-toggle(data-toggle="dropdown" href="#") Menu
-                            span.caret
-                        ul.dropdown-menu
-                            li 
-                                a(href="#") Nav item1
-                            li 
-                                a(href="#") Nav item2
-                            li 
-                                a(href="#") Nav item3
-                            li 
-                                a(href="#") Nav item4
+    body(ng-controller='UsersCtrl as UC' layout='column')
+        md-toolbar
+            div.md-toolbar-tools
+                h1 Header
+        md-tabs(md-stretch-tabs='always')
+            md-tab(label='Item 1')
+            md-tab(label='Item 2')
+            md-tab(label='Item 3')
+            md-tab(label='Item 4')
 
-            div.row
-                div.hidden-xs.col-sm-2.col-md-2.col-lg-2.users-data
-                    button.btn.btn-default(data-toggle='modal', data-target='#createUser', ng-click='UC.userCond(true)') Add New user
-                div.hidden-xs.col-sm-6.col-md-6.col-lg-6
-                    div.panel.panel-default
-                        div.panel-heading.text-center 
-                            h3 Users
-                            ul.list-group
-                                li.list-group-item(ng-repeat="user in UC.users track by $index", ng-click="UC.showDetails(user.id)", ng-class="{'active-user' :user.id == UC.currentUser.id}", ng-cloak) {{user.userName}}
-                div.hidden-xs.col-sm-4.col-md-4.col-lg-4.users-data
-                    h3 User Details
-                    div(ng-hide="!UC.currentUser.userName", ng-cloak).well.well-sm User: {{UC.currentUser.userName}}
-                    div(ng-hide="!UC.currentUser.userEmail", ng-cloak) Email: {{UC.currentUser.userEmail}}
-                    div(ng-hide="!UC.currentUser.userTel", ng-cloak) Telephone: {{UC.currentUser.userTel}}
-                    div(ng-hide="!UC.currentUser.userStreet", ng-cloak) Street: {{UC.currentUser.userStreet}}
-                    div(ng-hide="!UC.currentUser.userCity", ng-cloak) City: {{UC.currentUser.userCity}}
-                    div(ng-hide="!UC.currentUser.userState", ng-cloak) State: {{UC.currentUser.userState}}
-                    div(ng-hide="!UC.currentUser.userZip", ng-cloak) Zip code: {{UC.currentUser.userZip}}
-                    div.btn-group(ng-hide="!UC.currentUser", ng-cloak)
-                        button.btn.btn-default(data-toggle='modal', data-target='#createUser', ng-click='UC.userCond(false)') Update
-                        button.btn.btn-danger(ng-click='UC.deleteUser(UC.currentUser)') Delete
-            diw.row.visible-xs
-                div.panel.panel-default
-                    div.panel-heading.text-center 
+
+        div(layout="row" flex layout-padding layout-margin)
+            div(layout="column" flex )
+                md-button.md-raised(ng-click='UC.userCond(true)') Add New user
+            div(layout="column" flex )
+                div
+                    div
                         h3 Users
-                        ul.list-group
-                            li.list-group-item(ng-repeat="user in UC.users track by $index", ng-click="collapsed =!collapsed; UC.showDetails(user.id)", ng-cloak) 
-                                h4 {{user.userName}}
-                                div(ng-show='collapsed')
-                                    div(ng-hide="!UC.currentUser.userEmail", ng-cloak) Email: {{UC.currentUser.userEmail}}
-                                    div(ng-hide="!UC.currentUser.userTel", ng-cloak) Telephone: {{UC.currentUser.userTel}}
-                                    div(ng-hide="!UC.currentUser.userStreet", ng-cloak) Street: {{UC.currentUser.userStreet}}
-                                    div(ng-hide="!UC.currentUser.userCity", ng-cloak) City: {{UC.currentUser.userCity}}
-                                    div(ng-hide="!UC.currentUser.userState", ng-cloak) State: {{UC.currentUser.userState}}
-                                    div(ng-hide="!UC.currentUser.userZip", ng-cloak) Zip code: {{UC.currentUser.userZip}}
-                                    div.btn-group(ng-hide="!UC.currentUser", ng-cloak)
-                                        button.btn.btn-default(data-toggle='modal', data-target='#createUser', ng-click='UC.userCond(false)') Update
-                                        button.btn.btn-danger(ng-click='UC.deleteUser(UC.currentUser)') Delete
-       
-
-    div.modal.fade#createUser(role="dialog", aria-labelledby="myModalLabel", aria-hidden="true")
-        div.modal-dialog
-            div.modal-content
-                form.form-horizontal(role='form', name="createUser", ng-submit="UC.newUser?UC.saveUser():UC.updateUser()", novalidate)
-                    div.modal-header
-                        h4.modal-title(ng-if="UC.newUser") Create new user
-                        h4.modal-title(ng-if="!UC.newUser") Update user
-                    div.modal-body
-                        div.form-group.text-left
-                            label(for='user-name').col-sm-3.control-label User name:
-                                span.required *
-                            div.col-sm-9
-                                input.form-control(type='text' name='name', placeholder="Name", ng-model="UC.currentUser.userName", required)
-                                span(ng-show="createUser.name.$error.required && buttonClicked") Name is required
-                        div.form-group.text-left
-                            label(for='user-email').col-sm-3.control-label Email:
-                                span.required *  
-                            div.col-sm-9
-                                input.form-control.col-sm-10(type='email' name='email', placeholder="Email", ng-model="UC.currentUser.userEmail", required)
-                                span(ng-show="createUser.email.$invalid && buttonClicked") Enter a valid email. 
-                                span(ng-show="createUser.email.$error.required && buttonClicked") Email is required
-                        div.form-group.text-left
-                            label(for='user-telephone').col-sm-3.control-label Telephone:
-                            div.col-sm-9
-                                input.form-control(type='text' placeholder="Telephone", ng-model="UC.currentUser.userTel")
-                        div.form-group.text-left
-                            label(for='user-street').col-sm-3.control-label Street:
-                            div.col-sm-9
-                                input.form-control(type='text' placeholder="Street", ng-model="UC.currentUser.userStreet")
-                        div.form-group.text-left
-                            label(for='user-city').col-sm-3.control-label City:
-                            div.col-sm-9
-                                input.form-control(type='text' placeholder="City", ng-model="UC.currentUser.userCity")
-                        div.form-group.text-left
-                            label(for='user-state').col-sm-3.control-label State:
-                            div.col-sm-9
-                                input.form-control(type='text' placeholder="State", ng-model="UC.currentUser.userState")
-                        div.form-group.text-left
-                            label(for='user-zip').col-sm-3.control-label Zip code:
-                            div.col-sm-9
-                                input.form-control(type='text' placeholder="Zip code", ng-model="UC.currentUser.userZip")
-                        span.required * 
-                        span  - required fields
-                    div.modal-footer
-                        button.btn.btn-default(data-dismiss='modal') Close
-                        button.btn.btn-primary(type='submit', ng-click="buttonClicked=true") Save
+                        md-list
+                            md-list-item(ng-repeat="user in UC.users track by $index", ng-click="UC.showDetails(user.id)", ng-class="{'active-user' :user.id == UC.currentUser.id}", ng-cloak) {{user.userName}}
+            div(layout="column" flex)
+                h3 User Details
+                div(ng-hide="!UC.currentUser.userName", ng-cloak) User: {{UC.currentUser.userName}}
+                div(ng-hide="!UC.currentUser.userEmail", ng-cloak) Email: {{UC.currentUser.userEmail}}
+                div(ng-hide="!UC.currentUser.userTel", ng-cloak) Telephone: {{UC.currentUser.userTel}}
+                div(ng-hide="!UC.currentUser.userStreet", ng-cloak) Street: {{UC.currentUser.userStreet}}
+                div(ng-hide="!UC.currentUser.userCity", ng-cloak) City: {{UC.currentUser.userCity}}
+                div(ng-hide="!UC.currentUser.userState", ng-cloak) State: {{UC.currentUser.userState}}
+                div(ng-hide="!UC.currentUser.userZip", ng-cloak) Zip code: {{UC.currentUser.userZip}}
+                div(ng-hide="!UC.currentUser", ng-cloak)
+                    md-button.md-raised( ng-click='UC.userCond(false)') Update
+                    md-button.md-warn.md-raised(ng-click='UC.deleteUser(UC.currentUser)') Delete
 
 
 

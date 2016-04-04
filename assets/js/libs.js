@@ -1,5 +1,7 @@
-require('bootstrap/dist/css/bootstrap.min.css');
+require('angular-material/angular-material.min.css');
 
-window.jQuery = window.$ =  require('jquery/dist/jquery.min.js');
-require('bootstrap/dist/js/bootstrap.min.js');
+
 require('angular/angular.min.js');
+require('angular-animate/angular-animate.min.js');
+require('angular-aria/angular-aria.min.js');
+require('angular-material/angular-material.min.js');

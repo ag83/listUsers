@@ -9,26 +9,43 @@ html(lang="en", ng-app="userslist")
         link(href="styles.css", rel="stylesheet")
 
     body(ng-controller='UsersCtrl as UC' layout='column')
-        md-toolbar
+        md-toolbar(hide-xs)
             div.md-toolbar-tools
                 h1 Header
-        md-tabs(md-stretch-tabs='always')
+        md-tabs(md-stretch-tabs='always', hide-xs)
             md-tab(label='Item 1')
             md-tab(label='Item 2')
             md-tab(label='Item 3')
             md-tab(label='Item 4')
 
+        md-toolbar(hide-gt-xs)
+            div.md-toolbar-tools
+                h1 Header
+                span(flex)
+                md-button.md-raised(ng-click='UC.userCond(true)') Add
+                md-menu
+                    md-button.md-raised(ng-click="$mdOpenMenu()") Menu
+                    md-menu-content(width="4")
+                        md-menu-item 
+                            span.md-menu-align-target Item1
+                        md-menu-item 
+                            span.md-menu-align-target Item2
+                        md-menu-item 
+                            span.md-menu-align-target Item3
+                        md-menu-item 
+                            span.md-menu-align-target Item4
 
-        div(layout="row" flex layout-padding layout-margin)
-            div(layout="column" flex )
-                md-button.md-raised(ng-click='UC.userCond(true)') Add New user
-            div(layout="column" flex )
+
+        div(layout-gt-xs="row" flex-gt-xs layout-padding layout-margin hide-xs)
+            div(layout="column" flex ).users-data
+                md-button.md-raised.md-no-ink(ng-click='UC.userCond(true)') Add New
+            div(layout="column" flex ).users-data
                 div
                     div
                         h3 Users
                         md-list
                             md-list-item(ng-repeat="user in UC.users track by $index", ng-click="UC.showDetails(user.id)", ng-class="{'active-user' :user.id == UC.currentUser.id}", ng-cloak) {{user.userName}}
-            div(layout="column" flex)
+            div(layout="column" flex).users-data
                 h3 User Details
                 div(ng-hide="!UC.currentUser.userName", ng-cloak) User: {{UC.currentUser.userName}}
                 div(ng-hide="!UC.currentUser.userEmail", ng-cloak) Email: {{UC.currentUser.userEmail}}
@@ -40,6 +57,23 @@ html(lang="en", ng-app="userslist")
                 div(ng-hide="!UC.currentUser", ng-cloak)
                     md-button.md-raised( ng-click='UC.userCond(false)') Update
                     md-button.md-warn.md-raised(ng-click='UC.deleteUser(UC.currentUser)') Delete
+        div(layout-xs="row" flex-xs hide-gt-xs)
+            md-content(layout="column" flex layout-padding).users-data
+                h3 Users
+                    md-list
+                        md-list-item(ng-repeat="user in UC.users track by $index", ng-click="UC.showDetails(user.id); isCollapsed  = !isCollapsed", ng-cloak)
+
+                            div.md-title-content(ng-click="") {{user.userName}}
+                                div(ng-show='isCollapsed')
+                                    div(ng-hide="!UC.currentUser.userEmail", ng-cloak) Email: {{UC.currentUser.userEmail}}
+                                    div(ng-hide="!UC.currentUser.userTel", ng-cloak) Telephone: {{UC.currentUser.userTel}}
+                                    div(ng-hide="!UC.currentUser.userStreet", ng-cloak) Street: {{UC.currentUser.userStreet}}
+                                    div(ng-hide="!UC.currentUser.userCity", ng-cloak) City: {{UC.currentUser.userCity}}
+                                    div(ng-hide="!UC.currentUser.userState", ng-cloak) State: {{UC.currentUser.userState}}
+                                    div(ng-hide="!UC.currentUser.userZip", ng-cloak) Zip code: {{UC.currentUser.userZip}}
+                                    div(ng-hide="!UC.currentUser", ng-cloak)
+                                        md-button.md-raised( ng-click='UC.userCond(false)') Update
+                                        md-button.md-warn.md-raised(ng-click='UC.deleteUser(UC.currentUser)') Delete
 
 
 

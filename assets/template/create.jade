@@ -1,0 +1,35 @@
+md-dialog(flex="")
+    md-dialog-title(layout-padding="", ng-if="UC.newUser") Create new User
+    md-dialog-title(layout-padding="", ng-if="!UC.newUser") Update User
+    md-dialog-content(layout-padding="")
+        form(name="createUser")
+            md-input-container.md-block
+                label User name:
+                input.form-control(type='text' name='name', placeholder="Name", ng-model="UC.currentUser.userName", required="")
+                div(ng-messages="createUser.name.$error")
+                    div(ng-message="required") This is required field
+            md-input-container.md-block
+                label Email:  
+                input(type='email' name='email', ng-pattern="/^.+@.+\..+$/", placeholder="Email", ng-model="UC.currentUser.userEmail", required="")
+                div(ng-messages="createUser.email.$error")
+                    div(ng-message="required") This is required field
+                    div(ng-message="pattern") Please type correct email
+            md-input-container.md-block
+                label Telephone:
+                input(type='text' placeholder="Telephone", ng-model="UC.currentUser.userTel")
+            md-input-container.md-block
+                label Street:
+                input(type='text' placeholder="Street", ng-model="UC.currentUser.userStreet")
+            md-input-container.md-block
+                label City:
+                input.form-control(type='text' placeholder="City", ng-model="UC.currentUser.userCity")
+            md-input-container.md-block
+                label State:
+                input.form-control(type='text' placeholder="State", ng-model="UC.currentUser.userState")
+            md-input-container.md-block
+                label Zip code:
+                input.form-control(type='text' placeholder="Zip code", ng-model="UC.currentUser.userZip")
+    md-dialog-actions
+        md-button.md-primary(ng-click="closeDialog()") Close
+        md-button.md-primary(ng-click="saveUser()") Save
+

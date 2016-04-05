@@ -1,4 +1,4 @@
-module.exports = function ($scope, usersService) {
+module.exports = function ($scope, usersService, $mdDialog) {
 
     var vm = this;
     vm.users = usersService.getUsers();
@@ -9,13 +9,38 @@ module.exports = function ($scope, usersService) {
          vm.users = usersService.getUsers();
     });
 
-    vm.userCond = function(bool) {
+    vm.userCond = function(bool) {    
         if(bool) {
             vm.newUser=true;
             vm.currentUser=null;
         } else {
             vm.newUser=false;
         }
+
+        var template = require('template/create.jade')();
+        $mdDialog.show({
+            clickOutsideToClose: true,
+            escapeToClose: true,
+            scope: $scope,
+            preserveScope: true,
+            template: template,
+            controller: function DialogController($scope, $mdDialog) {
+                $scope.closeDialog = function() {
+                    $mdDialog.hide();
+                };
+                $scope.saveUser = function() {
+                    if ($scope.createUser.$valid) {
+                        console.log('$scope');
+                        if (vm.newUser) {
+                            usersService.setUser(vm.currentUser);
+                        } else if (!vm.newUser) {
+                            usersService.updateUser(vm.currentUser);
+                        }
+                        $mdDialog.hide();
+                    }
+                };
+            }
+        });
     };
 
     vm.showDetails = function(id) {
@@ -31,10 +56,11 @@ module.exports = function ($scope, usersService) {
     };
 
     vm.saveUser = function() {
-        if ($scope.createUser.$valid) {
+
+        /*if ($scope.createUser.$valid) {
             usersService.setUser(vm.currentUser);
             $('#createUser').modal('hide');
-        }   
+        }   */
     };
 
     vm.updateUser = function() {

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "angular": "~1.4.3",
-    "angular-material": "^1.0.7"
+    "angular-material": "^1.0.7",
+    "material-design-icons": "^2.2.3"
   }
 }
